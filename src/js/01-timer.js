@@ -1,5 +1,7 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
 // Inicjalizacja flatpickr
 const dateTimePicker = flatpickr('#datetime-picker', {
@@ -21,7 +23,12 @@ function handleDateSelection(selectedDates) {
     const now = new Date();
 
     if (selectedDate <= now) {
-        alert("Please choose a date in the future");
+        iziToast.error({
+            title: "Error",
+            message: "Please choose a date in the future",
+            position: 'topRight', 
+            timeout: 3000, 
+        });
         document.querySelector('[data-start]').disabled = true;
     } else {
         userSelectedDate = selectedDate;
@@ -78,3 +85,4 @@ document.querySelector('[data-start]').addEventListener('click', () => {
 
     timerInterval = setInterval(updateTimer, 1000);
 });
+console.log("Flatpickr initialized on #datetime-picker");
